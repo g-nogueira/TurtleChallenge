@@ -2,9 +2,13 @@
 using TurtleChallenge.Utils;
 
 namespace TurtleChallenge.Core.Models;
+
+/// <summary>
+/// Core class responsible for managind the UI.
+/// </summary>
 public class UI : IUserInterface
 {
-    private ICoordinate _messagesLine = new Coordinate(0, 6);
+    private IVector2 _messagesLine = new Vector2(0, 6);
 
     public string RequestSettingsFile()
     {
@@ -37,11 +41,6 @@ public class UI : IUserInterface
         return Console.ReadLine()?.NullIfEmpty();
     }
 
-    public void Display(string message)
-    {
-        Console.WriteLine(message);
-    }
-
     public void GameMessage(string message)
     {
         RemoveLine(_messagesLine.X, _messagesLine.Y);
@@ -51,7 +50,7 @@ public class UI : IUserInterface
         Console.Write(message);
     }
 
-    public void DisplayBoard(Board board, IEnumerable<GameObject> gameObjects)
+    public void RenderBoard(Board board, IEnumerable<GameObject> gameObjects)
     {
         ResetBoard(board);
 
@@ -62,9 +61,9 @@ public class UI : IUserInterface
             Console.Write($"│");
             for (int x = 0; x < board.Size.X; x++)
             {
-                var objectToDraw = gameObjects.FirstOrDefault(o => o.Position.Equals(new Coordinate(x, y)) && o.IsVisible);
+                var objectToDraw = gameObjects.FirstOrDefault(o => o.Position.Equals(new Vector2(x, y)) && o.IsVisible);
 
-                if (objectToDraw != null && objectToDraw.Position.Equals(new Coordinate(x, y)))
+                if (objectToDraw != null && objectToDraw.Position.Equals(new Vector2(x, y)))
                 {
                     Console.Write($" {objectToDraw.UI()}  │");
 

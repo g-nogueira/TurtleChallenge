@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TurtleChallenge.Utils;
 
 namespace TurtleChallenge.Core.Models;
-public abstract class LoadableFromFile<T>
+public abstract class LoadableFromFile
 {
     public string FileLocation { get; set; }
 
@@ -17,8 +17,6 @@ public abstract class LoadableFromFile<T>
     {
         FileLocation = fileLocation;
     }
-
-    public LoadableFromFile() { }
 
     /// <summary>
     /// Reads an .ini file from a given location.

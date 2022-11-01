@@ -7,9 +7,9 @@ using TurtleChallenge.Core.Interfaces;
 
 namespace TurtleChallenge.Core.Models
 {
-    public class Board : GameObject
+    public class Board : GameObject, IBoard
     {
-        public Board(ICoordinate size) {
+        public Board(IVector2 size) {
             Size = size;
             Tag = ObjectTypes.Board.ToString();
             IsVisible = false;
@@ -17,7 +17,7 @@ namespace TurtleChallenge.Core.Models
 
         public Board()
         {
-            Size = new Coordinate(Defaults.BoardSize);
+            Size = new Vector2(Defaults.BoardSize);
             Tag = ObjectTypes.Board.ToString();
             IsVisible = false;
 

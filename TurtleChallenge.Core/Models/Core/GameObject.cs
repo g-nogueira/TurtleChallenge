@@ -8,25 +8,42 @@ using TurtleChallenge.Core.Interfaces;
 namespace TurtleChallenge.Core.Models;
 
 public delegate void PositionChanged(GameObjectEvent e);
-public delegate void RotationChanged(GameObjectEvent e);
+public delegate void Directionhanged(GameObjectEvent e);
 public delegate void CollisionEntered(CollisionEvent e);
+
+/// <summary>
+/// Base class for all game entities.
+/// </summary>
 public class GameObject
 {
     /// <summary>
-    /// A string that can be arbitrarily used.
+    /// The arbitrary tag of this game object.
     /// </summary>
     public string? Tag { get; set; }
-    public ICoordinate Size { get; set; } = new Coordinate(1, 1);
-    public ICoordinate Position { get; set; } = new Coordinate(0, 0);
+    /// <summary>
+    /// The size of the object.
+    /// </summary>
+    public IVector2 Size { get; set; } = new Vector2(1, 1);
+    /// <summary>
+    /// The 2D word space position of the GameObject.
+    /// </suDmmary>
+    public IVector2 Position { get; set; } = new Vector2(0, 0);
+    /// <summary>
+    /// The direction the GameObject is facing.
+    /// </summary>
     public Direction Direction { get; set; } = Direction.North;
+
+    /// <summary>
+    /// The flag that controls wether the GameObject is visible to the UI.
+    /// </summary>
     public bool IsVisible { get; set; } = true;
 
     public event CollisionEntered? CollisionEnter;
     public event PositionChanged? PositionChange;
-    public event RotationChanged? RotationChange;
+    public event Directionhanged? RotationChange;
 
     /// <summary>
-    /// Moves the game object one step to the current <see cref="Direction"/>.
+    /// Moves the game object one step in the current <see cref="Direction"/>.
     /// </summary>
     public void Move()
     {
@@ -52,7 +69,7 @@ public class GameObject
     }
 
     /// <summary>
-    /// Sets the rotation of the object to a given direction.
+    /// Sets the rotation of the GameObject to a given <see cref="Direction"/>.
     /// </summary>
     /// <param name="direction"></param>
     public void Rotate(Direction direction)
@@ -61,7 +78,7 @@ public class GameObject
     }
 
     /// <summary>
-    /// Rotates the game object one step clockwise.
+    /// Rotates the GameObject one step clockwise.
     /// </summary>
     public void Rotate()
     {
@@ -83,11 +100,11 @@ public class GameObject
                 return;
         }
 
-        OnRotationChanged(new GameObjectEvent(this));
+        OnDirectionChanged(new GameObjectEvent(this));
     }
 
     /// <summary>
-    /// Event raised when a collision is detected.
+    /// OnCollisionEnter is called when this GameObject has the same <see cref="Vector2">Position</see> as another GameObject.
     /// </summary>
     /// <param name="e"></param>
     public virtual void OnCollisionEnter(CollisionEvent e)
@@ -95,12 +112,20 @@ public class GameObject
         CollisionEnter?.Invoke(e);
     }
 
+    /// <summary>
+    /// OnPositionChange is called when this GameObject has its <see cref="Vector2">Position</see> changed.
+    /// </summary>
+    /// <param name="e"></param>
     public virtual void OnPositionChange(GameObjectEvent e)
     {
         PositionChange?.Invoke(e);
     }
 
-    public virtual void OnRotationChanged(GameObjectEvent e)
+    /// <summary>
+    /// OnRotationChanged is called when this GameObject has its <see cref="Direction">Direction</see> changed.
+    /// </summary>
+    /// <param name="e"></param>
+    public virtual void OnDirectionChanged(GameObjectEvent e)
     {
         RotationChange?.Invoke(e);
     }

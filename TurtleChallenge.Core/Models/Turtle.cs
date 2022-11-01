@@ -8,13 +8,13 @@ using TurtleChallenge.Core.Interfaces;
 namespace TurtleChallenge.Core.Models;
 public class Turtle : GameObject
 {
-    public Turtle(ICoordinate position)
+    public Turtle(IVector2 position)
     {
         Position = position;
         Tag = ObjectTypes.Turtle.ToString();
     }
 
-    public Turtle(ICoordinate position, Direction direction)
+    public Turtle(IVector2 position, Direction direction)
     {
         Position = position;
         Direction = direction;

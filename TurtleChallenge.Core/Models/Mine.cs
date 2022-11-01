@@ -8,7 +8,7 @@ using TurtleChallenge.Core.Interfaces;
 namespace TurtleChallenge.Core.Models;
 public class Mine : GameObject
 {
-    public Mine(ICoordinate position)
+    public Mine(IVector2 position)
     {
         Position = position;
         Tag = ObjectTypes.Mine.ToString();

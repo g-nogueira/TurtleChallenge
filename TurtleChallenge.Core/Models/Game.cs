@@ -83,10 +83,10 @@ public class Game
         if (board == null || turtle == null) return;
 
         // Get board corner coordinates
-        var cornerTL = new Coordinate(0, board.Size.Y - 1);
-        var cornerTR = new Coordinate(board.Size.X - 1, board.Size.Y - 1);
-        var cornerBL = new Coordinate(0, 0);
-        var cornerBR = new Coordinate(board.Size.X - 1, 0);
+        var cornerTL = new Vector2(0, board.Size.Y - 1);
+        var cornerTR = new Vector2(board.Size.X - 1, board.Size.Y - 1);
+        var cornerBL = new Vector2(0, 0);
+        var cornerBR = new Vector2(board.Size.X - 1, 0);
 
         // Get board limits
         var isWallT = turtle.Position.Y == cornerTL.Y;
@@ -136,7 +136,7 @@ public class Game
 
         if (board == null) return;
 
-        UIInstance.DisplayBoard((Board)board, gameManager.GameObjects);
+        UIInstance.RenderBoard((Board)board, gameManager.GameObjects);
         Thread.Sleep(1000);
     }
 

@@ -8,7 +8,7 @@ using TurtleChallenge.Core.Interfaces;
 namespace TurtleChallenge.Core.Models;
 public class Exit : GameObject
 {
-    public Exit(ICoordinate position)
+    public Exit(IVector2 position)
     {
         Position = position;
         Tag = ObjectTypes.Exit.ToString();

@@ -7,22 +7,31 @@ using System.Threading.Tasks;
 using TurtleChallenge.Core.Interfaces;
 
 namespace TurtleChallenge.Core.Models;
-public class Coordinate : ICoordinate
+/// <summary>
+/// Representation of 2D vectors and points.
+/// </summary>
+public class Vector2 : IVector2
 {
+    /// <summary>
+    /// X component of the vector.
+    /// </summary>
     public int X { get; set; }
+    /// <summary>
+    /// Y component of the vector.
+    /// </summary>
     public int Y { get; set; }
 
-    public Coordinate(int x, int y)
+    public Vector2(int x, int y)
     {
         X = x; Y = y;
     }
 
     /// <summary>
-    /// Creates a Coordinate instance given a string in the X,Y format.
+    /// Creates a Vector2 instance given a string in the X,Y format.
     /// </summary>
     /// <param name="coordinate">A string in the format X,Y. E.g., "2,4"</param>
     /// <exception cref="Exception"></exception>
-    public Coordinate(string coordinate)
+    public Vector2(string coordinate)
     {
         try
         {
@@ -36,22 +45,27 @@ public class Coordinate : ICoordinate
         }
     }
 
-    public bool Equals(ICoordinate coordinate)
+    /// <summary>
+    /// Returns true if the given vector is exactly equal to this vector.
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
+    public bool Equals(IVector2 vector)
     {
-        return this.X == coordinate.X && this.Y == coordinate.Y;
+        return X == vector.X && Y == vector.Y;
     }
 
     /// <summary>
-    /// Evaluates wether the current coordinates is between two points. I.e., pertains to the same line.
+    /// Returns true if the current Vector is between two points. I.e., pertains to the same line.
     /// </summary>
     /// <remarks>
-    /// The code used in the method is highly on a StackOverflow thread.
+    /// The code used in the method is highly based on a StackOverflow thread.
     /// See more on <see href="https://stackoverflow.com/questions/328107/how-can-you-determine-a-point-is-between-two-other-points-on-a-line-segment"/>.
     /// </remarks>
     /// <param name="lineStart"></param>
     /// <param name="lineEnd"></param>
     /// <returns></returns>
-    public bool IsBetween(ICoordinate lineStart, ICoordinate lineEnd)
+    public bool IsBetween(IVector2 lineStart, IVector2 lineEnd)
     {
         var a = lineStart;
         var b = this;
@@ -72,8 +86,12 @@ public class Coordinate : ICoordinate
         return true;
     }
 
-    public ICoordinate Clone()
+    /// <summary>
+    /// Clones this Vector2 into a new instance,
+    /// </summary>
+    /// <returns></returns>
+    public IVector2 Clone()
     {
-        return new Coordinate(this.X, this.Y);
+        return new Vector2(X, Y);
     }
 }
