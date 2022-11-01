@@ -14,7 +14,7 @@ public delegate void CollisionEntered(CollisionEvent e);
 /// <summary>
 /// Base class for all game entities.
 /// </summary>
-public class GameObject
+public class GameObject : IGameObject
 {
     /// <summary>
     /// The arbitrary tag of this game object.
@@ -37,6 +37,7 @@ public class GameObject
     /// The flag that controls wether the GameObject is visible to the UI.
     /// </summary>
     public bool IsVisible { get; set; } = true;
+    public IVector2 MoveStepSize { get; set; } = new Vector2(1, 1);
 
     public event CollisionEntered? CollisionEnter;
     public event PositionChanged? PositionChange;
@@ -50,16 +51,16 @@ public class GameObject
         switch (Direction)
         {
             case Direction.North:
-                Position.Y -= 1;
+                Position.Y -= MoveStepSize.Y;
                 break;
             case Direction.South:
-                Position.Y += 1;
+                Position.Y += MoveStepSize.Y;
                 break;
             case Direction.West:
-                Position.X -= 1;
+                Position.X -= MoveStepSize.X;
                 break;
             case Direction.East:
-                Position.X += 1;
+                Position.X += MoveStepSize.X;
                 break;
             default:
                 break;
@@ -135,5 +136,8 @@ public class GameObject
         return "-";
     }
 
+    public virtual void Render(IUserInterface ui) {
+        ui.Render(ToString() ?? "", Position.X, Position.Y);
+    }
 }
 

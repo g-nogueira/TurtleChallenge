@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 using TurtleChallenge.Utils;
 
 namespace TurtleChallenge.Core.Models;
-public abstract class LoadableFromFile
+
+/// <summary>
+/// Class responsible for reading files across the project.
+/// </summary>
+public class FileReader
 {
     public string FileLocation { get; set; }
 
-    public LoadableFromFile(string fileLocation)
-    {
-        FileLocation = fileLocation;
-    }
+    public FileReader(string fileLocation) => FileLocation = fileLocation;
 
     /// <summary>
     /// Reads an .ini file from a given location.
     /// </summary>
     /// <param name="fileLocation"></param>
     /// <returns></returns>
-    public virtual string ReadIniValue(string section, string key)
+    public string INI(string section, string key)
     {
         INIFileReader iniFile = new INIFileReader(FileLocation);
 
@@ -36,11 +37,11 @@ public abstract class LoadableFromFile
     /// <typeparam name="TRecordType">The type of each record read from the file.</typeparam>
     /// <param name="fileLocation"></param>
     /// <returns></returns>
-    public virtual IEnumerable<string> ReadCSVFile(string fileLocation)
+    public IEnumerable<string> CSV()
     {
         var records = new List<string>();
 
-        using (var reader = new StreamReader(fileLocation))
+        using (var reader = new StreamReader(FileLocation))
         {
             var line = reader.ReadLine() ?? "";
             var values = line.Split(',');
@@ -49,15 +50,5 @@ public abstract class LoadableFromFile
         }
 
         return records;
-    }
-
-    public virtual bool IsIniLineValid(string key, IEnumerable<string> value)
-    {
-        return true;
-    }
-
-    public virtual bool IsCSVLineValid(string key, string value)
-    {
-        return true;
     }
 }

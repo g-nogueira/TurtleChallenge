@@ -8,20 +8,35 @@ namespace TurtleChallenge.Core.Models;
 /// </summary>
 public class UI : IUserInterface
 {
-    private IVector2 _messagesLine = new Vector2(0, 6);
+    private IVector2 _messagesLine = new Vector2(0, 10);
 
+    /// <summary>
+    /// Requests for the location of the GameSettings.ini file.
+    /// </summary>
+    /// <returns></returns>
     public string RequestSettingsFile()
     {
         return Prompt($"Settings Location ({Defaults.GameSettingsLocation}): ")?.NullIfEmpty() ?? Defaults.GameSettingsLocation;
 
     }
-
+    
+    /// <summary>
+    /// Requests for the location of the GaveMoves.csv file.
+    /// </summary>
+    /// <returns></returns>
     public string RequestMovesFile()
     {
         return Prompt($"Settings Location ({Defaults.MovesLocations}): ")?.NullIfEmpty() ?? Defaults.MovesLocations;
 
     }
 
+    /// <summary>
+    /// Requests for an user input.
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="breakLineAfter"></param>
+    /// <param name="breakLineBefore"></param>
+    /// <returns></returns>
     public string? Prompt(string title, bool breakLineAfter = false, bool breakLineBefore = false)
     {
         if (breakLineBefore)
@@ -41,7 +56,11 @@ public class UI : IUserInterface
         return Console.ReadLine()?.NullIfEmpty();
     }
 
-    public void GameMessage(string message)
+    /// <summary>
+    /// Displays a message in the UI while a game is running.
+    /// </summary>
+    /// <param name="message"></param>
+    public void InGameMessage(string message)
     {
         RemoveLine(_messagesLine.X, _messagesLine.Y);
 
@@ -50,52 +69,10 @@ public class UI : IUserInterface
         Console.Write(message);
     }
 
-    public void RenderBoard(Board board, IEnumerable<GameObject> gameObjects)
+    public void Render(string text, int x, int y)
     {
-        ResetBoard(board);
-
-        Console.WriteLine($"┌────┬────┬────┬────┬────┐");
-
-        for (int y = 0; y < board.Size.Y; y++)
-        {
-            Console.Write($"│");
-            for (int x = 0; x < board.Size.X; x++)
-            {
-                var objectToDraw = gameObjects.FirstOrDefault(o => o.Position.Equals(new Vector2(x, y)) && o.IsVisible);
-
-                if (objectToDraw != null && objectToDraw.Position.Equals(new Vector2(x, y)))
-                {
-                    Console.Write($" {objectToDraw.UI()}  │");
-
-                }
-                else
-                {
-                    Console.Write($"    │");
-                }
-            }
-            Console.WriteLine();
-        }
-
-        Console.WriteLine($"└────┴────┴────┴────┴────┘");
-
-        _messagesLine.Y = board.Size.Y + 2;
-    }
-
-    public void ResetBoard(Board board)
-    {
-        // Removes first line
-        RemoveLine(0, 0);
-
-        var lineCount = 1;
-        while (lineCount <= board.Size.Y)
-        {
-            RemoveLine(0, board.Position.Y + lineCount);
-
-            lineCount++;
-        }
-
-        RemoveLine(0, lineCount);
-
+        Console.SetCursorPosition(x, y);
+        Console.WriteLine(text);
         Console.SetCursorPosition(0, 0);
     }
 

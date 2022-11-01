@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using TurtleChallenge.Core.Interfaces;
@@ -26,22 +27,27 @@ public class Vector2 : IVector2
         X = x; Y = y;
     }
 
+    public Vector2(string x, string y)
+    {
+        X = int.Parse(x); Y = int.Parse(y);
+    }
+
     /// <summary>
     /// Creates a Vector2 instance given a string in the X,Y format.
     /// </summary>
-    /// <param name="coordinate">A string in the format X,Y. E.g., "2,4"</param>
+    /// <param name="vector2String">A string in the format X,Y. E.g., "2,4"</param>
     /// <exception cref="Exception"></exception>
-    public Vector2(string coordinate)
+    public Vector2(string vector2String)
     {
         try
         {
-            X = int.Parse(coordinate.Split(',')[0]);
-            Y = int.Parse(coordinate.Split(',')[1]);
+            X = int.Parse(vector2String.Split(',')[0]);
+            Y = int.Parse(vector2String.Split(',')[1]);
         }
         catch (FormatException e)
         {
 
-            throw new Exception($"The given coordinate has no valid format. The value received is {coordinate}");
+            throw new Exception($"The given coordinate has no valid format. The value received is {vector2String}");
         }
     }
 
@@ -94,4 +100,10 @@ public class Vector2 : IVector2
     {
         return new Vector2(X, Y);
     }
+
+    public static Vector2 operator /(Vector2 a, int b) => new(a.X / b, a.Y / b);
+    public static Vector2 operator +(Vector2 a, Vector2 b) => new(a.X + b.X, a.Y + b.Y);
+    public static Vector2 operator +(Vector2 a, int b) => new(a.X + b, a.Y + b);
+    public static Vector2 operator *(Vector2 a, Vector2 b) => new(a.X * b.X, a.Y * b.Y);
+    public static Vector2 operator -(Vector2 a, Vector2 b) => new(a.X - b.X, a.Y - b.Y);
 }

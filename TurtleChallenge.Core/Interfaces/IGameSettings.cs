@@ -5,8 +5,8 @@ public interface IGameSettings
 {
     public string FileLocation { get; }
     public IVector2 BoardSize{ get; }
-    public IVector2 StartPosition { get; }
+    public IVector2 StartCoodinates { get; }
     public Direction StartDirection { get; }
     public ICollection<IVector2> Mines { get; }
-    public IVector2 ExitPosition { get; }
+    public IVector2 ExitCoordinates { get; }
 }

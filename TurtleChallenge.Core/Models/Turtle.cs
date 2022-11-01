@@ -38,4 +38,9 @@ public class Turtle : GameObject
         }
         return "";
     }
+
+    public override string ToString()
+    {
+        return UI();
+    }
 }

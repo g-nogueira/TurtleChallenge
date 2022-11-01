@@ -3,11 +3,24 @@
 using TurtleChallenge.Core.Interfaces;
 using TurtleChallenge.Core.Models;
 
-public class MatchMoves : LoadableFromFile<MatchMoves>, IMatchMoves
-{
-    public IEnumerable<MoveType> Moves { get; set; } = new List<MoveType>();
+namespace TurtleChallenge.Core.Models;
 
-    public MatchMoves(string fileLocation) : base(fileLocation){}
+/// <summary>
+/// Class representing a MatchMoves.csv file.
+/// </summary>
+public class MatchMoves : IMatchMoves
+{
+    public IEnumerable<MoveType> Moves { get; set; }
+
+    public MatchMoves(string fileLocation = Defaults.MovesLocations)
+    {
+        var fileReader = new FileReader(fileLocation);
+
+        Moves = fileReader
+            .CSV()
+            .Select(move => Enum.TryParse<MoveType>(move, true, out var moveType) ? moveType : MoveType.None);
+
+    }
 
     /// <summary>
     /// Returns an Instance of <see cref="GameSettings"/> given a settings file.
@@ -16,10 +29,6 @@ public class MatchMoves : LoadableFromFile<MatchMoves>, IMatchMoves
     /// <returns></returns>
     public static MatchMoves GetInstance(string fileLocation)
     {
-        var instance = new MatchMoves(fileLocation ?? Defaults.MovesLocations);
-
-        instance.Moves = instance.ReadCSVFile(fileLocation).Select(move => Enum.TryParse<MoveType>(move, true, out var moveType) ? moveType : MoveType.None);
-
-        return instance;
+        return new MatchMoves(fileLocation);
     }
 }

@@ -18,4 +18,9 @@ public class Mine : GameObject
     {
         return "⁞";
     }
+
+    public override string ToString()
+    {
+        return UI();
+    }
 }

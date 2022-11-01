@@ -1,28 +1,53 @@
-﻿using TurtleChallenge.Core.Interfaces;
+﻿using System.Collections;
+using TurtleChallenge.Core.Interfaces;
+using TurtleChallenge.Utils;
 
 namespace TurtleChallenge.Core.Models;
-public class GameSettings : LoadableFromFile<GameSettings>, IGameSettings
+/// <summary>
+/// Class representing a GameSettings.ini file.
+/// </summary>
+public class GameSettings : IGameSettings
 {
+
+    #region Private Variables
     private IVector2 startPosition = new Vector2(0, 0);
     private IVector2 exitPosition = new Vector2(1, 1);
     private IVector2 boardSize = new Vector2(5, 5);
+    #endregion
 
-    public IVector2 StartPosition { get => startPosition.Clone(); }
-    public IVector2 ExitPosition { get => exitPosition.Clone(); }
+    #region Properties
+    public string FileLocation { get; }
+    public IVector2 StartCoodinates { get => startPosition.Clone(); }
+    public IVector2 ExitCoordinates { get => exitPosition.Clone(); }
     public IVector2 BoardSize { get => boardSize.Clone(); }
-    public Direction StartDirection { get; } = Direction.North;
-    public ICollection<IVector2> Mines { get; } = new List<IVector2>();
-    public GameSettings(string fileLocation)
+    public Direction StartDirection { get; }
+    public ICollection<IVector2> Mines { get; }
+    #endregion
+
+    public GameSettings(string fileLocation = Defaults.GameSettingsLocation)
     {
-        FileLocation = fileLocation;
+        var fileReader = new FileReader(fileLocation);
 
-        var MinesXY = ReadIniValue("Game Coordinates", "MinesXY").Split(' ');
+        // Read file values
+        var fileValues = new Dictionary<string, string>()
+        {
+            {"StartPositionX",  fileReader.INI("Game Coordinates", "StartPositionX")},
+            {"StartPositionY",  fileReader.INI("Game Coordinates", "StartPositionY")},
+            {"ExitX",           fileReader.INI("Game Coordinates", "ExitX")},
+            {"ExitY",           fileReader.INI("Game Coordinates", "ExitY")},
+            {"StartDir",        fileReader.INI("Game Coordinates", "StartDir")},
+            {"MinesXY",         fileReader.INI("Game Coordinates", "MinesXY")},
+            {"BoardX",          fileReader.INI("Board", "BoardX")},
+            {"BoardY",          fileReader.INI("Board", "BoardY")}
+        };
 
-        Mines = MinesXY.Select(coord => (IVector2)new Coordinate(coord)).ToList();
-        startPosition = new Vector2($"{ReadIniValue("Game Coordinates", "StartPositionX")}, {ReadIniValue("Game Coordinates", "StartPositionY")}");
-        exitPosition = new Vector2($"{ReadIniValue("Game Coordinates", "ExitX")}, {ReadIniValue("Game Coordinates", "ExitY")}");
-        StartDirection = Enum.Parse<Direction>(ReadIniValue("Game Coordinates", "StartDir"), ignoreCase: true);
-        boardSize = new Vector2($"{ReadIniValue("Board", "BoardX")}, {ReadIniValue("Board", "BoardY")}");
+        // Initialize instance attributes
+        FileLocation    = fileLocation;
+        StartDirection  = Enum.TryParse<Direction>(fileValues["StartDir"], ignoreCase: true, out var startDirection) ? startDirection : Direction.North;
+        Mines           = fileValues["MinesXY"].Split(' ').Select(coord => (IVector2)new Vector2(coord)).ToList();
+        startPosition   = new Vector2(fileValues["StartPositionX"], fileValues["StartPositionY"]);
+        exitPosition    = new Vector2(fileValues["ExitX"], fileValues["ExitY"]);
+        boardSize       = new Vector2(fileValues["BoardX"], fileValues["BoardY"]);
     }
 
     /// <summary>

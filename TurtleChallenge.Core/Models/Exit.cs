@@ -18,4 +18,9 @@ public class Exit : GameObject
     {
         return "♥";
     }
+
+    public override string ToString()
+    {
+        return UI();
+    }
 }
