@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TurtleChallenge.Core.Models;
-class GameManager
+public class GameManager
 {
     public ICollection<GameObject> GameObjects { get; private set; } = new HashSet<GameObject>();
 

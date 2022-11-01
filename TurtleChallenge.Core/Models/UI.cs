@@ -8,19 +8,24 @@ public class UI : IUserInterface
 
     public string RequestSettingsFile()
     {
-        return Prompt($"Settings Location ({Defaults.GameSettingsLocation}): ", breakLine: false)?.NullIfEmpty() ?? Defaults.GameSettingsLocation;
+        return Prompt($"Settings Location ({Defaults.GameSettingsLocation}): ")?.NullIfEmpty() ?? Defaults.GameSettingsLocation;
 
     }
 
     public string RequestMovesFile()
     {
-        return Prompt($"Settings Location ({Defaults.MovesLocations}): ", breakLine: false)?.NullIfEmpty() ?? Defaults.MovesLocations;
+        return Prompt($"Settings Location ({Defaults.MovesLocations}): ")?.NullIfEmpty() ?? Defaults.MovesLocations;
 
     }
 
-    public string? Prompt(string title, bool breakLine = true)
+    public string? Prompt(string title, bool breakLineAfter = false, bool breakLineBefore = false)
     {
-        if (breakLine)
+        if (breakLineBefore)
+        {
+            Console.WriteLine();
+        }
+
+        if (breakLineAfter)
         {
             Console.WriteLine(title);
         }

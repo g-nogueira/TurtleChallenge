@@ -13,4 +13,7 @@ public interface ICoordinate
     /// <param name="lineEnd"></param>
     /// <returns></returns>
     public bool IsBetween(ICoordinate lineStart, ICoordinate lineEnd);
+
+
+    public ICoordinate Clone();
 }

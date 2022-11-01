@@ -71,4 +71,9 @@ public class Coordinate : ICoordinate
 
         return true;
     }
+
+    public ICoordinate Clone()
+    {
+        return new Coordinate(this.X, this.Y);
+    }
 }
