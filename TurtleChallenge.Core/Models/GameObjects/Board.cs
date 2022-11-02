@@ -76,10 +76,5 @@ namespace TurtleChallenge.Core.Models
             }
             sb.AppendLine("┐");
         }
-
-        public override string UI()
-        {
-            return " ";
-        }
     }
 }

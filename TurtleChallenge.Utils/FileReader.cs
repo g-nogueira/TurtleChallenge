@@ -1,5 +1,4 @@
-﻿using CsvHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
 using System.Globalization;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TurtleChallenge.Utils;
 
-namespace TurtleChallenge.Core.Models;
+namespace TurtleChallenge.Utils;
 
 /// <summary>
 /// Class responsible for reading files across the project.

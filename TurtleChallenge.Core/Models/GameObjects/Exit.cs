@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 using TurtleChallenge.Core.Interfaces;
 
 namespace TurtleChallenge.Core.Models;
-public class Mine : GameObject
+public class Exit : GameObject
 {
-    public Mine(IVector2 position)
+    public Exit(IVector2 position)
     {
         Position = position;
-        Tag = ObjectTypes.Mine.ToString();
-    }
-
-    public override string UI()
-    {
-        return "⁞";
+        Tag = ObjectTypes.Exit.ToString();
+        Color = ConsoleColor.Red;
     }
 
     public override string ToString()
     {
-        return UI();
+        return "♥";
     }
 }

@@ -59,7 +59,5 @@ public interface IGameObject
     /// Rotates the GameObject one step clockwise.
     /// </summary>
     public void Rotate();
-    public abstract string UI();
-
 }
 

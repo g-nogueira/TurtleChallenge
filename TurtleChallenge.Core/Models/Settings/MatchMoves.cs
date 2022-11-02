@@ -1,7 +1,7 @@
 ﻿//// See https://aka.ms/new-console-template for more information
 
 using TurtleChallenge.Core.Interfaces;
-using TurtleChallenge.Core.Models;
+using TurtleChallenge.Utils;
 
 namespace TurtleChallenge.Core.Models;
 

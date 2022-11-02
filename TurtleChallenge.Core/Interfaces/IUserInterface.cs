@@ -29,8 +29,14 @@ public interface IUserInterface
     /// Displays a message in the UI while a game is running.
     /// </summary>
     /// <param name="message"></param>
-    public void InGameMessage(string message);
+    public void InGameMessage(string message, ConsoleColor color);
+
+    /// <summary>
+    /// Clears the whole Console.
+    /// </summary>
+    public void Clear();
 
     public void Render(string text, int x, int y);
+    public void Render(string text, int x, int y, ConsoleColor color);
     public static abstract UI GetInstance();
 }

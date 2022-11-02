@@ -10,7 +10,7 @@ namespace TurtleChallenge.Core.Models;
 public class Game
 {
     public readonly GameManager gameManager = new();
-    public readonly UI UIInstance = UI.GetInstance();
+    public readonly UI uiInstance = UI.GetInstance();
     private readonly IGameSettings _gameSettings;
     private MatchMoves? _matchMoves;
 
@@ -24,7 +24,9 @@ public class Game
 
     public void StartMatch(MatchMoves matchMoves)
     {
+        uiInstance.Clear();
         gameManager.Reset();
+
         _matchMoves = matchMoves;
 
         var board = new Board(_gameSettings.BoardSize);
@@ -196,7 +198,7 @@ public class Game
 
         foreach (var obj in gameManager.GameObjects)
         {
-            obj.Render(UIInstance);
+            obj.Render(uiInstance);
         }
 
         if (sleep)
@@ -207,20 +209,20 @@ public class Game
 
     public void WinGame(string message = "You Win!")
     {
-        UIInstance.InGameMessage(message);
+        uiInstance.InGameMessage(message, ConsoleColor.Green);
         AskToRestart();
     }
 
     public void LoseGame(string message = "You Lose!")
     {
-        UIInstance.InGameMessage(message);
+        uiInstance.InGameMessage(message, ConsoleColor.Red);
         AskToRestart();
 
     }
 
     public void HitWall(string message = "Be careful!")
     {
-        UIInstance.InGameMessage(message);
+        uiInstance.InGameMessage(message, ConsoleColor.Yellow);
     }
 
     /// <summary>
@@ -228,7 +230,7 @@ public class Game
     /// </summary>
     public void AskToRestart()
     {
-        var parsed = bool.TryParse(UIInstance.Prompt("Do you want to restart? (true): ", breakLineBefore: true), out var restart);
+        var parsed = bool.TryParse(uiInstance.Prompt("Do you want to restart? (true): ", breakLineBefore: true), out var restart);
         
         if ((parsed && restart || !parsed) && _matchMoves != null)
         {

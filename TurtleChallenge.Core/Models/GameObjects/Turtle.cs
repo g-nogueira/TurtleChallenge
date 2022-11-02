@@ -12,6 +12,7 @@ public class Turtle : GameObject
     {
         Position = position;
         Tag = ObjectTypes.Turtle.ToString();
+        Color = ConsoleColor.White;
     }
 
     public Turtle(IVector2 position, Direction direction)
@@ -19,9 +20,10 @@ public class Turtle : GameObject
         Position = position;
         Direction = direction;
         Tag = ObjectTypes.Turtle.ToString();
+        Color = ConsoleColor.White;
     }
 
-    public override string UI()
+    public override string ToString()
     {
         switch (Direction)
         {
@@ -37,10 +39,5 @@ public class Turtle : GameObject
                 break;
         }
         return "";
-    }
-
-    public override string ToString()
-    {
-        return UI();
     }
 }

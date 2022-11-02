@@ -32,11 +32,14 @@ public class GameObject : IGameObject
     /// The direction the GameObject is facing.
     /// </summary>
     public Direction Direction { get; set; } = Direction.North;
-
     /// <summary>
     /// The flag that controls wether the GameObject is visible to the UI.
     /// </summary>
     public bool IsVisible { get; set; } = true;
+    /// <summary>
+    /// The color the GameObject will be draw in the screen.
+    /// </summary>
+    public ConsoleColor Color { get; set; } = ConsoleColor.Gray;
     public IVector2 MoveStepSize { get; set; } = new Vector2(1, 1);
 
     public event CollisionEntered? CollisionEnter;
@@ -131,13 +134,8 @@ public class GameObject : IGameObject
         RotationChange?.Invoke(e);
     }
 
-    public virtual string UI()
-    {
-        return "-";
-    }
-
     public virtual void Render(IUserInterface ui) {
-        ui.Render(ToString() ?? "", Position.X, Position.Y);
+        ui.Render(ToString() ?? "", Position.X, Position.Y, Color);
     }
 }
 
