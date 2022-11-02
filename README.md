@@ -27,10 +27,10 @@ This challenge was presented to me in a job interview. The goal was simple, but 
 
     MinesXY = "1,1 3,1 3,3"
     ```
-2. On the IDE of your choice, run [Program.cs](TurtleChallenge/Program.cs) and enter the file locations.
+2. On the IDE of your choice, run [Program.cs](TurtleChallenge/Program.cs) and enter the locations of the files created in the previous step.
 
     ![An image with a demo of the file locations requested by the game.](Demo/Program_1.png)
-3. You're good to go!
+3. Press Enter and You're good to go!
 
 # Architecture
 As was having more fun than I probably should have, I experimented a little and implemented some things based on [Unity](https://unity.com/) (See the list [below](#items-based-on-unity-workflow)). Besides that, it uses a simple project division:
