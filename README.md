@@ -1,5 +1,5 @@
 # TurtleChallenge
-This challenge was presented to me in a job interview. The goal was simple, but it seemed to fun for me to not add some additional sprinkle.
+This challenge was presented to me in a job interview. The goal was simple, but it seemed too fun for me to not add some additional sprinkle.
 
 ![A GIF of the game running.](Demo/TurtleChallenge.gif)
 
